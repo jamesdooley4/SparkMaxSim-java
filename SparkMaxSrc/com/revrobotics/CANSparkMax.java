@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 REV Robotics
+ * Copyright (c) 2018-2020 REV Robotics
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -186,7 +186,8 @@ public class CANSparkMax extends CANSparkMaxLowLevel implements AutoCloseable {
 	/**
 	 * Common interface for inverting direction of a speed controller.
 	 *
-	 * This call has no effect if the controller is a follower.
+	 * This call has no effect if the controller is a follower. To invert
+	 * a follower, see the follow() method.
 	 *
 	 * @param isInverted The state of inversion, true is inverted.
 	 */
