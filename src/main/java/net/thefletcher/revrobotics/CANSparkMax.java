@@ -28,6 +28,8 @@
 
 package net.thefletcher.revrobotics;
 
+import javax.annotation.Nullable;
+
 import com.revrobotics.jni.CANSparkMaxJNI;
 import edu.wpi.first.hal.*;
 import edu.wpi.first.wpilibj.Sendable;
@@ -55,14 +57,14 @@ public class CANSparkMax extends CANSparkMaxLowLevel implements Sendable, AutoCl
 	/**
 	 * Create a new SPARK MAX Controller
 	 *
-	 * @param name     The name to show in the simulation UI
+	 * @param name     The name to show in the simulation UI, if null only the ID distinguishes SPARK MAX devices
 	 * @param deviceID The device ID.
 	 * @param type     The motor type connected to the controller. Brushless motors
 	 *                 must be connected to their matching color and the hall sensor
 	 *                 plugged in. Brushed motors must be connected to the Red and
 	 *                 Black terminals only.
 	 */
-	public CANSparkMax(String name, int deviceID, MotorType type) {
+	public CANSparkMax(@Nullable String name, int deviceID, MotorType type) {
 		super(name, deviceID, type);
 
         if (m_simDevice != null) {
@@ -88,7 +90,7 @@ public class CANSparkMax extends CANSparkMaxLowLevel implements Sendable, AutoCl
 	 *                 Black terminals only.
 	 */
 	public CANSparkMax(int deviceID, MotorType type) {
-		this("CANSparkMax", deviceID, type);
+		this(null, deviceID, type);
 	}
 
 	@Override

@@ -34,6 +34,9 @@ import edu.wpi.first.hal.*;
 import edu.wpi.first.wpilibj.SpeedController;
 
 import java.nio.ByteBuffer;
+import java.util.Objects;
+
+import javax.annotation.Nullable;
 
 import net.thefletcher.revrobotics.enums.*;
 
@@ -75,15 +78,21 @@ public abstract class CANSparkMaxLowLevel implements SpeedController {
 	/**
 	 * Create a new SPARK MAX Controller
 	 *
-	 * @param name     The name to show in the simulation UI
+	 * @param name     The name to show in the simulation UI, if null only the ID distinguishes SPARK MAX devices
 	 * @param deviceID The device ID.
 	 * @param type     The motor type connected to the controller. Brushless motors
 	 *                 must be connected to their matching color and the hall sensor
 	 *                 plugged in. Brushed motors must be connected to the Red and
 	 *                 Black terminals only.
 	 */
-	public CANSparkMaxLowLevel(String name, int deviceID, MotorType type) {
-		m_simDevice = SimDevice.create("SparkMax (" + name + ")", deviceID);
+	public CANSparkMaxLowLevel(@Nullable String name, int deviceID, MotorType type) {
+		String simName = "CANSparkMax";
+		if (Objects.nonNull(name) && !name.isEmpty()) {
+			simName = "CANSparkMax (" + name + ")";
+		}
+
+		m_simDevice = SimDevice.create(simName, deviceID);
+
 		if (m_simDevice != null) {
 			m_simMotorType = m_simDevice.createEnum("Motor Type", true, new String[] { "Brushed", "Brushless" }, type.value);
 			m_simIsFollower = m_simDevice.createBoolean("Follower", true, false);
@@ -112,7 +121,7 @@ public abstract class CANSparkMaxLowLevel implements SpeedController {
 	 *                 Black terminals only.
 	 */
 	public CANSparkMaxLowLevel(int deviceID, MotorType type) {
-		this("CANSparkMax", deviceID, type);
+		this(null, deviceID, type);
 	}
 
 	/**
