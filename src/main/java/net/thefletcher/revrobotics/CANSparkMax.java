@@ -55,14 +55,15 @@ public class CANSparkMax extends CANSparkMaxLowLevel implements Sendable, AutoCl
 	/**
 	 * Create a new SPARK MAX Controller
 	 *
+	 * @param name     The name to show in the simulation UI
 	 * @param deviceID The device ID.
 	 * @param type     The motor type connected to the controller. Brushless motors
 	 *                 must be connected to their matching color and the hall sensor
 	 *                 plugged in. Brushed motors must be connected to the Red and
 	 *                 Black terminals only.
 	 */
-	public CANSparkMax(int deviceID, MotorType type) {
-		super(deviceID, type);
+	public CANSparkMax(String name, int deviceID, MotorType type) {
+		super(name, deviceID, type);
 
         if (m_simDevice != null) {
             m_simInverted = m_simDevice.createBoolean("Inverted", false, false);
@@ -75,6 +76,19 @@ public class CANSparkMax extends CANSparkMaxLowLevel implements Sendable, AutoCl
             m_simSoftLimitRev = m_simDevice.createDouble("Rev Soft Limit", false, 0.0);
             m_simSoftLimitRevEnabled = m_simDevice.createBoolean("Rev Soft Limit Enabled", false, false);
         }
+	}
+
+	/**
+	 * Create a new SPARK MAX Controller using a default simulation name of CANSparkMax
+	 *
+	 * @param deviceID The device ID.
+	 * @param type     The motor type connected to the controller. Brushless motors
+	 *                 must be connected to their matching color and the hall sensor
+	 *                 plugged in. Brushed motors must be connected to the Red and
+	 *                 Black terminals only.
+	 */
+	public CANSparkMax(int deviceID, MotorType type) {
+		this("CANSparkMax", deviceID, type);
 	}
 
 	@Override
